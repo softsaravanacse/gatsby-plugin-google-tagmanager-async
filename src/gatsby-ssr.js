@@ -1,12 +1,14 @@
 import React from "react"
 import { oneLine, stripIndent } from "common-tags"
 
-const generateGTM = ({ id, environmentParamStr, dataLayerName }) => stripIndent`
-  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+const generateGTM = ({ id, environmentParamStr, dataLayerName, timeout }) => stripIndent`  
+  var gtmScript=function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   'https://www.googletagmanager.com/gtm.js?id='+i+dl+'${environmentParamStr}';f.parentNode.insertBefore(j,f);
-  })(window,document,'script','${dataLayerName}', '${id}');`
+  };
+  setTimeout(function(){gtmScript(window,document,'script','${dataLayerName}', '${id}');},${timeout | 1000});
+  `
 
 const generateGTMIframe = ({ id, environmentParamStr }) =>
   oneLine`<iframe src="https://www.googletagmanager.com/ns.html?id=${id}${environmentParamStr}" height="0" width="0" style="display: none; visibility: hidden"></iframe>`
@@ -40,6 +42,7 @@ exports.onRenderBody = (
     gtmPreview,
     defaultDataLayer,
     dataLayerName = `dataLayer`,
+    timeout,
   }
 ) => {
   if (process.env.NODE_ENV === `production` || includeInDevelopment) {
@@ -65,7 +68,7 @@ exports.onRenderBody = (
         dangerouslySetInnerHTML={{
           __html: oneLine`
             ${defaultDataLayerCode}
-            ${generateGTM({ id, environmentParamStr, dataLayerName })}`,
+            ${generateGTM({ id, environmentParamStr, dataLayerName, timeout })}`,
         }}
       />,
     ])

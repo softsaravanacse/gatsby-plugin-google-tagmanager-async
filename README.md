@@ -1,4 +1,6 @@
-# gatsby-plugin-google-tagmanager
+# gatsby-plugin-google-tagmanager-timeout
+
+Fork of gatsby-plugin-google-tagmanager that delays loading of GTM by placing it at the end of body and adding a delay.
 
 Easily add Google Tagmanager to your Gatsby site.
 
@@ -19,7 +21,7 @@ plugins: [
       // Include GTM in development.
       // Defaults to false meaning GTM will only be loaded in production.
       includeInDevelopment: false,
-
+      timeout: 2000, // delayed for 2 seconds - default value is 1 second
       // datalayer to be set before GTM is loaded
       // should be an object or a function that is executed in the browser
       // Defaults to null

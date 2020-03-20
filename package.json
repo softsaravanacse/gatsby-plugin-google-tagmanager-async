@@ -1,5 +1,5 @@
 {
-  "name": "gatsby-plugin-google-tagmanager",
+  "name": "gatsby-plugin-google-tagmanager-timeout",
   "description": "Gatsby plugin to add google tagmanager onto a site",
   "version": "2.2.0",
   "author": "Thijs Koerselman <thijs@vauxlab.com>",
@@ -20,7 +20,8 @@
     "gatsby",
     "gatsby-plugin",
     "google analytics",
-    "google tagmanager"
+    "google tagmanager",
+    "google tagmanager-timeout"    
   ],
   "license": "MIT",
   "main": "index.js",
