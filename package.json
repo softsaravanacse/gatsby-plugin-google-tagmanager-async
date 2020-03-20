@@ -21,7 +21,7 @@
     "gatsby-plugin",
     "google analytics",
     "google tagmanager",
-    "google tagmanager-timeout"    
+    "google tagmanager-timeout"
   ],
   "license": "MIT",
   "main": "index.js",

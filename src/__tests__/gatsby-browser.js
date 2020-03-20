@@ -16,7 +16,9 @@ beforeEach(() => {
 
 describe(`onRouteUpdate`, () => {
   it(`does not register if NODE_ENV is not production`, () => {
-    const { onRouteUpdate } = getAPI(() => {
+    const {
+      onRouteUpdate
+    } = getAPI(() => {
       process.env.NODE_ENV = `development`
     })
 
@@ -28,7 +30,9 @@ describe(`onRouteUpdate`, () => {
   })
 
   it(`registers a route change event`, () => {
-    const { onRouteUpdate } = getAPI(() => {
+    const {
+      onRouteUpdate
+    } = getAPI(() => {
       process.env.NODE_ENV = `production`
     })
 
@@ -36,15 +40,15 @@ describe(`onRouteUpdate`, () => {
 
     jest.runAllTimers()
 
-    expect(window.dataLayer).toEqual([
-      {
-        event: `gatsby-route-change`,
-      },
-    ])
+    expect(window.dataLayer).toEqual([{
+      event: `gatsby-route-change`,
+    }, ])
   })
 
   it(`registers if NODE_ENV is production`, () => {
-    const { onRouteUpdate } = getAPI(() => {
+    const {
+      onRouteUpdate
+    } = getAPI(() => {
       process.env.NODE_ENV = `production`
     })
 
@@ -56,14 +60,13 @@ describe(`onRouteUpdate`, () => {
   })
 
   it(`registers if includeInDevelopment is true`, () => {
-    const { onRouteUpdate } = getAPI(() => {})
+    const {
+      onRouteUpdate
+    } = getAPI(() => {})
 
-    onRouteUpdate(
-      {},
-      {
-        includeInDevelopment: true,
-      }
-    )
+    onRouteUpdate({}, {
+      includeInDevelopment: true,
+    })
 
     jest.runAllTimers()
 
@@ -71,18 +74,17 @@ describe(`onRouteUpdate`, () => {
   })
 
   it(`registers new data layer variable if dataLayerName is specified`, () => {
-    const { onRouteUpdate } = getAPI(() => {
+    const {
+      onRouteUpdate
+    } = getAPI(() => {
       process.env.NODE_ENV = `production`
     })
     const dataLayerName = `fooBarDataLater`
     window[dataLayerName] = []
 
-    onRouteUpdate(
-      {},
-      {
-        dataLayerName,
-      }
-    )
+    onRouteUpdate({}, {
+      dataLayerName,
+    })
 
     jest.runAllTimers()
 

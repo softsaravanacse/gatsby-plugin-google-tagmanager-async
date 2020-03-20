@@ -1,7 +1,15 @@
 import React from "react"
-import { oneLine, stripIndent } from "common-tags"
+import {
+  oneLine,
+  stripIndent
+} from "common-tags"
 
-const generateGTM = ({ id, environmentParamStr, dataLayerName, timeout }) => stripIndent`  
+const generateGTM = ({
+  id,
+  environmentParamStr,
+  dataLayerName,
+  timeout
+}) => stripIndent `  
   var gtmScript=function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
@@ -10,8 +18,11 @@ const generateGTM = ({ id, environmentParamStr, dataLayerName, timeout }) => str
   setTimeout(function(){gtmScript(window,document,'script','${dataLayerName}', '${id}');},${timeout | 1000});
   `
 
-const generateGTMIframe = ({ id, environmentParamStr }) =>
-  oneLine`<iframe src="https://www.googletagmanager.com/ns.html?id=${id}${environmentParamStr}" height="0" width="0" style="display: none; visibility: hidden"></iframe>`
+const generateGTMIframe = ({
+    id,
+    environmentParamStr
+  }) =>
+  oneLine `<iframe src="https://www.googletagmanager.com/ns.html?id=${id}${environmentParamStr}" height="0" width="0" style="display: none; visibility: hidden"></iframe>`
 
 const generateDefaultDataLayer = (dataLayer, reporter, dataLayerName) => {
   let result = `window.${dataLayerName} = window.${dataLayerName} || [];`
@@ -30,28 +41,29 @@ const generateDefaultDataLayer = (dataLayer, reporter, dataLayerName) => {
     )});`
   }
 
-  return stripIndent`${result}`
+  return stripIndent `${result}`
 }
 
-exports.onRenderBody = (
-  { setHeadComponents, setPreBodyComponents, reporter },
-  {
-    id,
-    includeInDevelopment = false,
-    gtmAuth,
-    gtmPreview,
-    defaultDataLayer,
-    dataLayerName = `dataLayer`,
-    timeout,
-  }
-) => {
+exports.onRenderBody = ({
+  setHeadComponents,
+  setPreBodyComponents,
+  reporter
+}, {
+  id,
+  includeInDevelopment = false,
+  gtmAuth,
+  gtmPreview,
+  defaultDataLayer,
+  dataLayerName = `dataLayer`,
+  timeout,
+}) => {
   if (process.env.NODE_ENV === `production` || includeInDevelopment) {
     const environmentParamStr =
-      gtmAuth && gtmPreview
-        ? oneLine`
+      gtmAuth && gtmPreview ?
+      oneLine `
       &gtm_auth=${gtmAuth}&gtm_preview=${gtmPreview}&gtm_cookies_win=x
-    `
-        : ``
+    ` :
+      ``
 
     let defaultDataLayerCode = ``
     if (defaultDataLayer) {
@@ -62,23 +74,30 @@ exports.onRenderBody = (
       )
     }
 
-    setHeadComponents([
-      <script
-        key="plugin-google-tagmanager"
-        dangerouslySetInnerHTML={{
-          __html: oneLine`
+    setHeadComponents([ <
+      script
+      key = "plugin-google-tagmanager"
+      dangerouslySetInnerHTML = {
+        {
+          __html: oneLine `
             ${defaultDataLayerCode}
             ${generateGTM({ id, environmentParamStr, dataLayerName, timeout })}`,
-        }}
+        }
+      }
       />,
     ])
 
-    setPreBodyComponents([
-      <noscript
-        key="plugin-google-tagmanager"
-        dangerouslySetInnerHTML={{
-          __html: generateGTMIframe({ id, environmentParamStr }),
-        }}
+    setPreBodyComponents([ <
+      noscript
+      key = "plugin-google-tagmanager"
+      dangerouslySetInnerHTML = {
+        {
+          __html: generateGTMIframe({
+            id,
+            environmentParamStr
+          }),
+        }
+      }
       />,
     ])
   }

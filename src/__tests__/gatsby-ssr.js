@@ -1,5 +1,9 @@
-const { oneLine } = require(`common-tags`)
-const { onRenderBody } = require(`../gatsby-ssr`)
+const {
+  oneLine
+} = require(`common-tags`)
+const {
+  onRenderBody
+} = require(`../gatsby-ssr`)
 
 describe(`gatsby-plugin-google-tagmanager`, () => {
   it(`should load gtm`, () => {
@@ -54,7 +58,9 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
         includeInDevelopment: true,
         defaultDataLayer: {
           type: `object`,
-          value: { pageCategory: `home` },
+          value: {
+            pageCategory: `home`
+          },
         },
       }
 
@@ -75,13 +81,15 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
         includeInDevelopment: true,
         defaultDataLayer: {
           type: `function`,
-          value: function() {
-            return { pageCategory: window.pageType }
+          value: function () {
+            return {
+              pageCategory: window.pageType
+            }
           }.toString(),
         },
       }
 
-      const datalayerFuncAsString = oneLine`${pluginOptions.defaultDataLayer.value}`
+      const datalayerFuncAsString = oneLine `${pluginOptions.defaultDataLayer.value}`
 
       onRenderBody(mocks, pluginOptions)
       const [headConfig] = mocks.setHeadComponents.mock.calls[0][0]
@@ -133,7 +141,9 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
         includeInDevelopment: true,
         defaultDataLayer: {
           type: `object`,
-          value: { pageCategory: `home` },
+          value: {
+            pageCategory: `home`
+          },
         },
         dataLayerName,
       }
@@ -157,7 +167,9 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
         timeout: 2000,
         defaultDataLayer: {
           type: `object`,
-          value: { pageCategory: `home` },
+          value: {
+            pageCategory: `home`
+          },
         },
         dataLayerName,
       }
