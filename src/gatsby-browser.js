@@ -5,13 +5,11 @@ exports.onRouteUpdate = (_, pluginOptions) => {
   ) {
     // wrap inside a timeout to ensure the title has properly been changed
     setTimeout(() => {
-      let data = pluginOptions.dataLayerName ?
-        window[pluginOptions.dataLayerName] :
-        window.dataLayer
+      let data = pluginOptions.dataLayerName
+        ? window[pluginOptions.dataLayerName]
+        : window.dataLayer
 
-      data.push({
-        event: `gatsby-route-change`
-      })
-    }, 50)
+      data.push({ event: `gatsby-route-change` })
+    }, pluginOptions.timeout | 1000)
   }
 }
