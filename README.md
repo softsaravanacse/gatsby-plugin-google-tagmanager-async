@@ -6,7 +6,7 @@ Easily add Google Tagmanager to your Gatsby site.
 
 ## Install
 
-`npm install --save gatsby-plugin-google-tagmanager`
+`npm install --save gatsby-plugin-google-tagmanager-timeout`
 
 ## How to use
 
@@ -14,7 +14,7 @@ Easily add Google Tagmanager to your Gatsby site.
 // In your gatsby-config.js
 plugins: [
   {
-    resolve: "gatsby-plugin-google-tagmanager",
+    resolve: "gatsby-plugin-google-tagmanager-timeout",
     options: {
       id: "YOUR_GOOGLE_TAGMANAGER_ID",
 
