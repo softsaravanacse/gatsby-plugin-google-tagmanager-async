@@ -4,14 +4,12 @@ import {
   stripIndent
 } from "common-tags"
 
-const generateGTM = ({ id, environmentParamStr, dataLayerName, timeout }) => stripIndent`
-  setTimeout(function(){
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+const generateGTM = ({ id, environmentParamStr, dataLayerName,timeout }) => stripIndent`
+  setTimeout(function(){var rungtm = function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   'https://www.googletagmanager.com/gtm.js?id='+i+dl+'${environmentParamStr}';f.parentNode.insertBefore(j,f);
-  })(window,document,'script','${dataLayerName}', '${id}');
-  },${timeout | 1000});`
+  }; rungtm(window,document,'script','${dataLayerName}', '${id}');}, ${timeout | 1000});`
 
 const generateGTMIframe = ({
     id,
@@ -40,8 +38,7 @@ const generateDefaultDataLayer = (dataLayer, reporter, dataLayerName) => {
 }
 
 exports.onRenderBody = ({
-  setHeadComponents,
-  setPreBodyComponents,
+  setPostBodyComponents,  
   reporter
 }, {
   id,
@@ -69,7 +66,7 @@ exports.onRenderBody = ({
       )
     }
 
-    setHeadComponents([ <
+    setPostBodyComponents([ <
       script
       key = "plugin-google-tagmanager"
       dangerouslySetInnerHTML = {
@@ -80,10 +77,7 @@ exports.onRenderBody = ({
         }
       }
       />,
-    ])
-
-    setPreBodyComponents([ <
-      noscript
+      <noscript
       key = "plugin-google-tagmanager"
       dangerouslySetInnerHTML = {
         {
